@@ -75,4 +75,9 @@ class AppTest < Test::Unit::TestCase
     assert_equal "Validation failed: Nickname can't be blank", last_response.body
     assert_equal 0, Comment.all.size
   end
+
+  def test_serves_static_files
+    get "/commentary.js"
+    assert last_response.ok?
+  end
 end

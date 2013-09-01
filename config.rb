@@ -18,3 +18,6 @@ configure do
                                           :adapter => 'sqlite3',
                                           :database => get_db_for_env(ENV["RACK_ENV"]))
 end
+
+
+set :public_folder, File.join(File.dirname(__FILE__), "public")
