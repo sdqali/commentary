@@ -44,7 +44,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  rack-test
+  rack-test (= 0.6.2)
   sinatra (= 1.4.3)
   sinatra-activerecord (= 1.2.3)
   sqlite3 (= 1.3.8)

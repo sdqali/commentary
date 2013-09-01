@@ -32,4 +32,16 @@ class AppTest < Test::Unit::TestCase
     assert_equal "foo", output.first["nickname"]
     assert_equal "Test comment", output.first["content"]
   end
+
+  def test_responds_with_422_if_domain_not_specified
+    get "/comments", {:document_path => "about/us"}
+    assert_equal 422, last_response.status
+    assert_equal "The domain and document_path must be specified", last_response.body
+  end
+
+  def test_responds_with_422_if_document_path_not_specified
+    get "/comments", {:domain => "example.com"}
+    assert_equal 422, last_response.status
+    assert_equal "The domain and document_path must be specified", last_response.body
+  end
 end
