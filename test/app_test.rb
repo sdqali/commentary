@@ -44,4 +44,35 @@ class AppTest < Test::Unit::TestCase
     assert_equal 422, last_response.status
     assert_equal "The domain and document_path must be specified", last_response.body
   end
+
+  def test_know_how_to_add_comment
+    request_body = {
+      :nickname => "foo",
+      :content => "Test comment",
+      :domain => "example.com",
+      :document_path => "about/us"
+    }.to_json
+    post "/comments", request_body
+    assert_equal 201, last_response.status
+    assert_equal 1, Comment.all.size
+  end
+
+  def test_does_not_create_comment_if_params_not_sent
+    post "/comments"
+    assert_equal 422, last_response.status
+    assert_equal "The JSON provided is not valid.", last_response.body
+    assert_equal 0, Comment.all.size
+  end
+
+  def test_does_not_create_comment_if_not_valid_data
+    request_body = {
+      :content => "Test comment",
+      :domain => "example.com",
+      :document_path => "about/us"
+    }.to_json
+    post "/comments", request_body
+    assert_equal 422, last_response.status
+    assert_equal "Validation failed: Nickname can't be blank", last_response.body
+    assert_equal 0, Comment.all.size
+  end
 end
