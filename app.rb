@@ -3,6 +3,7 @@ require "sinatra"
 
 require_relative "config"
 require_relative "models/comment"
+require_relative "models/site"
 
 include Commentary
 
@@ -29,11 +30,14 @@ post "/comments.json" do
   raw_json = request.body.read
   begin
     comment_hash = JSON.parse(raw_json)
+    site = Site.find_by_domain(comment_hash["domain"])
+    return [422, app_headers, [{:error => "The Site provided is not valid."}.to_json]] unless site
     comment = Comment.create!({
                                 :content => comment_hash["content"],
                                 :nickname => comment_hash["nickname"],
                                 :domain => comment_hash["domain"],
-                                :document_path => comment_hash["document_path"]
+                                :document_path => comment_hash["document_path"],
+                                :site_id => site.id
                               })
 
   rescue JSON::ParserError

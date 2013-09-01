@@ -15,14 +15,20 @@ class AppTest < Test::Unit::TestCase
 
   def teardown
     Comment.delete_all
+    Site.delete_all
   end
 
   def test_knows_how_to_retrieve_comments
     4.times do
+      blog = Site.create!({
+                     :name => "Blog",
+                     :domain => "blog.example.com"
+                   })
       Comment.create!({:nickname => "foo",
                         :content => "Test comment",
                         :domain => "example.com",
-                        :document_path => "about/us"})
+                        :document_path => "about/us",
+                        :site_id => blog.id})
     end
 
     get "/comments.json", {:domain => "example.com", :document_path => "about/us"}
@@ -46,10 +52,14 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_know_how_to_add_comment
+    blog = Site.create!({
+                          :name => "Blog",
+                          :domain => "blog.example.com"
+                        })
     request_body = {
       :nickname => "foo",
       :content => "Test comment",
-      :domain => "example.com",
+      :domain => "blog.example.com",
       :document_path => "about/us"
     }.to_json
     post "/comments.json", request_body
@@ -65,14 +75,20 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_does_not_create_comment_if_not_valid_data
+    blog = Site.create!({
+                          :name => "Blog",
+                          :domain => "blog.example.com"
+                        })
+
     request_body = {
       :content => "Test comment",
       :domain => "example.com",
-      :document_path => "about/us"
+      :document_path => "about/us",
+      :nickname => "foo"
     }.to_json
     post "/comments.json", request_body
     assert_equal 422, last_response.status
-    assert_match "Validation failed: Nickname can't be blank", last_response.body
+    assert_match "The Site provided is not valid.", last_response.body
     assert_equal 0, Comment.all.size
   end
 
