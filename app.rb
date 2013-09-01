@@ -44,3 +44,20 @@ post "/comments.json" do
 
   [201, app_headers, [comment.to_json]]
 end
+
+get "/comment_frame" do
+  domain = params["domain"]
+  document_path = params["document_path"]
+  rendered_content = IO.read(File.join("public", "comment_frame.html"))
+    .gsub("%DOMAIN%", "\"#{domain}\"")
+    .gsub("%DOCUMENT_PATH%", "\"#{document_path}\"")
+
+  [
+   200,
+   {
+     "Content-Type" => "text/html",
+     "Access-Control-Allow-Origin" => "*"
+   },
+   [rendered_content]
+  ]
+end

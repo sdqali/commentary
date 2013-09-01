@@ -21,3 +21,4 @@ end
 
 
 set :public_folder, File.join(File.dirname(__FILE__), "public")
+set :protection, :except => :frame_options
