@@ -18,8 +18,10 @@ get "/comments.json" do
   return [422,
           app_headers,
           [{:error => "The domain and document_path must be specified"}.to_json]] unless (params["domain"] && params["document_path"])
+  site = Site.find_by_domain(params["domain"])
+  return 404 unless site
   comments = Comment.where({
-                             :domain => params["domain"],
+                             :site_id => site.id,
                              :document_path => params["document_path"]
                            }).to_a
   [200, app_headers, [comments.to_json]]
@@ -34,7 +36,6 @@ post "/comments.json" do
     comment = Comment.create!({
                                 :content => comment_hash["content"],
                                 :nickname => comment_hash["nickname"],
-                                :domain => comment_hash["domain"],
                                 :document_path => comment_hash["document_path"],
                                 :site_id => site.id
                               })

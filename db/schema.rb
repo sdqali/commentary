@@ -10,12 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130901220643) do
+ActiveRecord::Schema.define(version: 20130901232253) do
 
   create_table "comments", force: true do |t|
     t.string   "nickname"
     t.text     "content"
-    t.string   "domain"
     t.text     "document_path"
     t.datetime "created_at"
     t.datetime "updated_at"

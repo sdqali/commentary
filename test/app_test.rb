@@ -19,19 +19,18 @@ class AppTest < Test::Unit::TestCase
   end
 
   def test_knows_how_to_retrieve_comments
+    blog = Site.create!({
+                          :name => "Blog",
+                          :domain => "blog.example.com"
+                        })
     4.times do
-      blog = Site.create!({
-                     :name => "Blog",
-                     :domain => "blog.example.com"
-                   })
       Comment.create!({:nickname => "foo",
                         :content => "Test comment",
-                        :domain => "example.com",
                         :document_path => "about/us",
                         :site_id => blog.id})
     end
 
-    get "/comments.json", {:domain => "example.com", :document_path => "about/us"}
+    get "/comments.json", {:domain => "blog.example.com", :document_path => "about/us"}
     assert last_response.ok?
     output = JSON.parse(last_response.body)
     assert_equal 4, output.size
@@ -82,7 +81,6 @@ class AppTest < Test::Unit::TestCase
 
     request_body = {
       :content => "Test comment",
-      :domain => "example.com",
       :document_path => "about/us",
       :nickname => "foo"
     }.to_json

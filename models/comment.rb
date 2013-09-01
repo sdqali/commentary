@@ -9,7 +9,6 @@ module Commentary
     validates_presence_of :site_id
     validates_presence_of :nickname
     validates_presence_of :content
-    validates_presence_of :domain
     validates_presence_of :document_path
   end
 end
