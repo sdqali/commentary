@@ -36,13 +36,13 @@ class AppTest < Test::Unit::TestCase
   def test_responds_with_422_if_domain_not_specified
     get "/comments.json", {:document_path => "about/us"}
     assert_equal 422, last_response.status
-    assert_equal "The domain and document_path must be specified", last_response.body
+    assert_match "The domain and document_path must be specified", last_response.body
   end
 
   def test_responds_with_422_if_document_path_not_specified
     get "/comments.json", {:domain => "example.com"}
     assert_equal 422, last_response.status
-    assert_equal "The domain and document_path must be specified", last_response.body
+    assert_match "The domain and document_path must be specified", last_response.body
   end
 
   def test_know_how_to_add_comment
@@ -60,7 +60,7 @@ class AppTest < Test::Unit::TestCase
   def test_does_not_create_comment_if_params_not_sent
     post "/comments.json"
     assert_equal 422, last_response.status
-    assert_equal "The JSON provided is not valid.", last_response.body
+    assert_match "The JSON provided is not valid.", last_response.body
     assert_equal 0, Comment.all.size
   end
 
@@ -72,12 +72,22 @@ class AppTest < Test::Unit::TestCase
     }.to_json
     post "/comments.json", request_body
     assert_equal 422, last_response.status
-    assert_equal "Validation failed: Nickname can't be blank", last_response.body
+    assert_match "Validation failed: Nickname can't be blank", last_response.body
     assert_equal 0, Comment.all.size
   end
 
   def test_serves_static_files
     get "/commentary.js"
     assert last_response.ok?
+  end
+
+  def test_ensure_correct_content_type
+    post "/comments.json", {:foo => :bar}
+    assert_equal "application/json", last_response.headers["Content-Type"]
+  end
+
+  def test_ensure_correct_content_type
+    get "/comments.json", {:foo => :bar}
+    assert_equal "*", last_response.headers["Access-Control-Allow-Origin"]
   end
 end
