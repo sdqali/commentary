@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Commentary demo</title>
+    <script type="text/javascript" src="http://localhost:4567/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="http://localhost:4567/commentary.js"></script>
+    <link rel="stylesheet" href="http://localhost:4567/commentary.css" type="text/css" media="screen" />
+  </head>
+  <body>
+    <div class="content">
+      <p>Some content</p>
+      <div class="comments">
+
+      </div>
+    </div>
+    <script type="text/javascript">
+      Commentary.initialize("http://localhost:4567", ".comments");
+    </script>
+  </body>
+</html>

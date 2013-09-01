@@ -6,16 +6,24 @@ require_relative "models/comment"
 
 include Commentary
 
-get "/comments" do
+def app_headers
+  {
+    "Access-Control-Allow-Origin" => "*",
+    "Content-Type" => "application/json"
+  }
+end
+
+
+get "/comments.json" do
   return [422, ["The domain and document_path must be specified"]] unless (params["domain"] && params["document_path"])
   comments = Comment.where({
                              :domain => params["domain"],
                              :document_path => params["document_path"]
                            }).to_a
-  comments.to_json
+  [200, app_headers, [comments.to_json]]
 end
 
-post "/comments" do
+post "/comments.json" do
   raw_json = request.body.read
   begin
     comment_hash = JSON.parse(raw_json)
@@ -32,5 +40,5 @@ post "/comments" do
     return [422, [e.message]]
   end
 
-  [201, [comment.to_json]]
+  [201, app_headers, [comment.to_json]]
 end
