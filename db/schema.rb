@@ -12,11 +12,13 @@
 
 ActiveRecord::Schema.define(version: 20130901155033) do
 
-  create_table "comment", force: true do |t|
-    t.string "nickname"
-    t.text   "content"
-    t.string "domain"
-    t.text   "document_path"
+  create_table "comments", force: true do |t|
+    t.string   "nickname"
+    t.text     "content"
+    t.string   "domain"
+    t.text     "document_path"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end
