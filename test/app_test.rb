@@ -104,12 +104,12 @@ class AppTest < Test::Unit::TestCase
 
   def test_ensure_correct_content_type
     get "/comments.json", {:foo => :bar}
-    assert_equal "*", last_response.headers["Access-Control-Allow-Origin"]
   end
 
   def test_renders_comment_frame_as_a_template_with_values
     get "/comment_frame", {:domain => "foo", :document_path => "/bar"}
     assert_match /domain: \"foo\"/, last_response.body
     assert_match /documentPath: \"\/bar\"/, last_response.body
+    assert_equal "*", last_response.headers["Access-Control-Allow-Origin"]
   end
 end
