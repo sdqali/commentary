@@ -82,7 +82,8 @@ class AppTest < Test::Unit::TestCase
     request_body = {
       :content => "Test comment",
       :document_path => "about/us",
-      :nickname => "foo"
+      :nickname => "foo",
+      :domain => "foo.example.com"
     }.to_json
     post "/comments.json", request_body
     assert_equal 422, last_response.status
