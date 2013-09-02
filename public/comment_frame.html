@@ -2,6 +2,7 @@
 <html>
   <head>
     <script type="text/javascript" src="/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="/commentary.css" type="text/css" media="screen" />
     <script type="text/javascript">
       Commentary = {
         domain: %DOMAIN%,
@@ -10,7 +11,20 @@
     </script>
   </head>
   <body>
-    Comments
-    <script type="text/javascript" src="/render_comments.js"></script>
+    <div class="comments">
+      <div class="create">
+	<form>
+	  <p>
+	    Name: <input type="text" name="nickname" value="" />
+	  </p>
+	  <p>
+	    <textarea name="content" id="comment-body" rows="5" cols="" tabindex=""></textarea>
+	  </p>
+	</form>
+      </div>
+      <div class="list">
+
+      </div>
+    </div>
   </body>
 </html>

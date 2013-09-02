@@ -24,7 +24,7 @@ get "/comments.json" do
                              :site_id => site.id,
                              :document_path => params["document_path"]
                            }).to_a
-  [200, app_headers, [comments.to_json]]
+  [200, {"Access-Control-Allow-Origin" => "*"}, [comments.to_json]]
 end
 
 post "/comments.json" do
