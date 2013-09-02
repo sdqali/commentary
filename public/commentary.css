@@ -14,3 +14,10 @@ input[type="text"] {
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
+
+.button {
+    padding: 3px 10px;
+    border: 1px solid black;
+    background: lightgray;
+    border-radius: 4px;
+}

@@ -13,7 +13,9 @@
       </div>
     </div>
     <script type="text/javascript">
-      Commentary.initialize("http://localhost:4567", ".comments");
+      $(document).ready(function() {
+        Commentary.initialize("http://localhost:4567", ".comments");
+      });
     </script>
   </body>
 </html>

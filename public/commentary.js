@@ -5,8 +5,8 @@ Commentary = {
 	    var frameUrl = commentaryUrl.concat("/comment_frame")
 		.concat("?domain=").concat(window.location.host)
 		.concat("&document_path=").concat(window.location.pathname);
-	    commentFrame.attr("src", frameUrl);
-	    commentFrame.attr("style", "width: 100%; border: none");
+	    commentFrame.attr("src",  frameUrl);
+	    commentFrame.attr("style", "width: 100%; border: none; height: 200px");
 	    commentFrame.attr("class", "commentary-frame");
 	    commentFrame.attr("scrolling", "auto");
 	    $(selector).append(commentFrame);
@@ -22,17 +22,15 @@ Commentary = {
 		    document_path: window.location.pathname
 		}
 	    }).done(function(comments) {
-		$('body').append("<ul>");
+		$(selector).append("<ul>");
 		comments.forEach(function(comment) {
 		    $("ul").append("<li>".concat(comment.content).concat("</li>"));
 		});
 	    });
 	};
 
-	$(document).ready(function() {
-	    showComments(commentaryUrl, selector);
-	    addCommentCreateFrame(commentaryUrl, selector);
-	});
+	showComments(commentaryUrl, selector);
+	addCommentCreateFrame(commentaryUrl, selector);
     }
 };
 
