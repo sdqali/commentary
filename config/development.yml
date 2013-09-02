@@ -1,2 +1,2 @@
 name: Example
-domain: blog.example.com
+domain: "localhost:3333"

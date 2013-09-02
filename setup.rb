@@ -4,15 +4,15 @@ require_relative "app"
 module Commentary
   class Setup
     def self.initialize
-      rack_env = ENV["RACK_ENV"]
-      config = YAML.load(File.join(File.dirname(__FILE__),
-                                   "..",
-                                   "config",
-                                   "#{rack_env}.yml"))
-      Site.create!({
-                     :name => config['name'],
-                     :domain => config['domain']
-                   })
+      rack_env = ENV["RACK_ENV"] || "development"
+      config = YAML::load(IO.read(File.join(File.dirname(__FILE__),
+                                            "config",
+                                            "#{rack_env}.yml")))
+
+      site = Site.new
+      site.name = config['name']
+      site.domain = config['domain']
+      site.save
     end
   end
 end
