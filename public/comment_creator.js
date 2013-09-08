@@ -1,4 +1,9 @@
 $(document).ready(function() {
+    var resize = function() {
+	var height = $("html").height();
+	window.parent.postMessage(['setHeight', height], '*');
+    };
+
     $("input.button").click(function() {
 	var nickname = $(".nickname").val();
 	var commentContent = $("#comment-body").val();
@@ -16,10 +21,13 @@ $(document).ready(function() {
 		content: commentContent
 	    })
 	}).done(function(comment) {
-	    console.log("Created comment");
+	    $(".nickname").val("");
+	    $("#comment-body").val("");
 	    console.log(comment);
 	}).error(function(error) {
 	    console.log(error);
 	});
     });
+
+    resize();
 });
