@@ -12,9 +12,9 @@ Commentary = {
 	    $(selector).append(commentFrame);
 	};
 
-	var wireUpMessages = function() {
+	var wireUpMessages = function(selector) {
 	    window.addEventListener('message', function (e) {
-		var $iframe = $('.commentary-frame');
+		var $iframe = $(selector.concat(' .commentary-frame'));
 
 		var eventName = e.data[0];
 		var data      = e.data[1];
@@ -27,26 +27,8 @@ Commentary = {
 	    }, false);
 	};
 
-	var showComments = function(commentaryUrl, selector) {
-	    $.ajax({
-		url: commentaryUrl.concat("/comments.json"),
-		type: "GET",
-		dataType: "json",
-		data: {
-		    domain: window.location.host,
-		    document_path: window.location.pathname
-		}
-	    }).done(function(comments) {
-		$(selector).append("<ul>");
-		comments.forEach(function(comment) {
-		    $("ul").append("<li>".concat(comment.content).concat("</li>"));
-		});
-	    });
-	};
-
-	showComments(commentaryUrl, selector);
 	addCommentCreateFrame(commentaryUrl, selector);
-	wireUpMessages();
+	wireUpMessages(selector);
     }
 };
 
