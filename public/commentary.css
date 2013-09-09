@@ -21,3 +21,21 @@ input[type="text"] {
     background: lightgray;
     border-radius: 4px;
 }
+
+.comments .display {
+    margin: 10px;
+}
+
+.single-comment {
+    margin: 10px 0px;
+}
+
+.single-comment .nickname,
+.single-comment .timestamp {
+    font-style: italic;
+    font-size:  85%;
+}
+
+.single-comment .comment-body {
+    margin-top: 4px;
+}

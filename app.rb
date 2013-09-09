@@ -24,7 +24,15 @@ get "/comments.json" do
                              :site_id => site.id,
                              :document_path => params["document_path"]
                            }).to_a
-  [200, {"Access-Control-Allow-Origin" => "*"}, [comments.to_json]]
+  output = comments.map do |c|
+    {
+      :content => c.content,
+      :nickname => c.nickname,
+      :timestamp => c.created_at.to_s
+    }
+  end
+
+  [200, {"Access-Control-Allow-Origin" => "*"}, [output.to_json]]
 end
 
 post "/comments.json" do

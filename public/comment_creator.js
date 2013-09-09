@@ -14,10 +14,28 @@ $(document).ready(function() {
 		document_path: Commentary.documentPath
 	    }
 	}).done(function(comments) {
-	    $('.comments .display ul').remove();
-	    $('.comments .display').append("<ul>");
+	    $('.comments .display .single-comment').remove();
+	    $('.comments .display').append("<div>");
 	    comments.forEach(function(comment) {
-		$("ul").append("<li>".concat(comment.content).concat("</li>"));
+		var commentDiv = $("<div>");
+		commentDiv.attr("class", "single-comment");
+
+		var nickname = $("<div>");
+		nickname.attr("class", "nickname");
+		nickname.text(comment.nickname);
+		commentDiv.append(nickname);
+
+		var timeStamp = $("<div>");
+		timeStamp.attr("class", "timestamp");
+		timeStamp.text(comment.timestamp);
+		commentDiv.append(timeStamp);
+
+		var commentBody = $("<div>");
+		commentBody.attr("class", "comment-body");
+		commentBody.text(comment.content);
+		commentDiv.append(commentBody);
+
+		$('.comments .display').append(commentDiv);
 	    });
 	    resize();
 	});
