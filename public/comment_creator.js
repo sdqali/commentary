@@ -38,6 +38,13 @@ $(document).ready(function() {
 		$('.comments .display').append(commentDiv);
 	    });
 	    resize();
+	}).error(function(error) {
+	    var errorText = JSON.parse(error.responseText).error;
+	    var errorDiv = $("<div>");
+	    errorDiv.text(errorText);
+	    errorDiv.css("font-weight", "bold");
+	    $('.comments .display').append(errorDiv);
+	    resize();
 	});
 	resize();
     };
