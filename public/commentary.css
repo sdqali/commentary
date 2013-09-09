@@ -39,3 +39,7 @@ input[type="text"] {
 .single-comment .comment-body {
     margin-top: 4px;
 }
+
+.loader {
+    display: none;
+}

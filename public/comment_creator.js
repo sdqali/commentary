@@ -54,6 +54,8 @@ $(document).ready(function() {
     };
 
     $("input.button").click(function() {
+	var loader = $("img.loader");
+	loader.css("display", "inline");
 	var nickname = $(".nickname").val();
 	var commentContent = $("#comment-body").val();
 	if($.trim(nickname) == "" || $.trim(commentContent) == "") {
@@ -74,8 +76,10 @@ $(document).ready(function() {
 	    $("#comment-body").val("");
 	    console.log(comment);
 	    showComments();
+	    loader.css("display", "none");
 	}).error(function(error) {
 	    renderError(error);
+	    loader.css("display", "none");
 	    resize();
 	});
     });
