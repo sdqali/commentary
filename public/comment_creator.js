@@ -4,6 +4,14 @@ $(document).ready(function() {
 	window.parent.postMessage(['setHeight', height], '*');
     };
 
+   var renderError = function(error) {
+       var errorText = error.responseJSON.error;
+       var errorDiv = $("<div>");
+       errorDiv.text(errorText);
+       errorDiv.css("font-weight", "bold");
+       $('.comments .display').append(errorDiv);
+   }
+
     var showComments = function() {
 	$.ajax({
 	    url: "/comments.json",
@@ -39,11 +47,7 @@ $(document).ready(function() {
 	    });
 	    resize();
 	}).error(function(error) {
-	    var errorText = JSON.parse(error.responseText).error;
-	    var errorDiv = $("<div>");
-	    errorDiv.text(errorText);
-	    errorDiv.css("font-weight", "bold");
-	    $('.comments .display').append(errorDiv);
+	    renderError(error);
 	    resize();
 	});
 	resize();
@@ -71,8 +75,8 @@ $(document).ready(function() {
 	    console.log(comment);
 	    showComments();
 	}).error(function(error) {
-	    console.log(error);
-	    showComments();
+	    renderError(error);
+	    resize();
 	});
     });
     showComments();

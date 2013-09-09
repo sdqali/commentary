@@ -17,9 +17,9 @@ end
 get "/comments.json" do
   return [422,
           app_headers,
-          [{:error => "The domain and document_path must be specified"}.to_json]] unless (params["domain"] && params["document_path"])
+          [{:error => "The domain and document_path must be specified."}.to_json]] unless (params["domain"] && params["document_path"])
   site = Site.find_by_domain(params["domain"])
-  return [404, app_headers, {:error => "Commentary is not configured for this domain"}.to_json] unless site
+  return [404, app_headers, {:error => "Commentary is not configured for this domain."}.to_json] unless site
   comments = Comment.where({
                              :site_id => site.id,
                              :document_path => params["document_path"]
