@@ -32,7 +32,7 @@ get "/comments.json" do
     }
   end
 
-  [200, {"Access-Control-Allow-Origin" => "*"}, [output.to_json]]
+  [200, app_headers, [output.to_json]]
 end
 
 post "/comments.json" do
@@ -68,7 +68,7 @@ get "/comment_frame" do
    200,
    {
      "Content-Type" => "text/html",
-     "Access-Control-Allow-Origin" => "*"
+     "Access-Control-Allow-Origin" => domain
    },
    [rendered_content]
   ]
